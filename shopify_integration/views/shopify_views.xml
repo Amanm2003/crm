@@ -1,0 +1,50 @@
+<odoo>
+    <!-- Tree View -->
+    <record id="view_shopify_integration_tree" model="ir.ui.view">
+        <field name="name">shopify.integration.tree</field>
+        <field name="model">shopify.integration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="shop_url"/>
+                <field name="api_key"/>
+                <field name="api_version"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_shopify_integration_form" model="ir.ui.view">
+        <field name="name">shopify.integration.form</field>
+        <field name="model">shopify.integration</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Integration">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="shop_url"/>
+                        <field name="api_key"/>
+                        <field name="password"/>
+                        <field name="api_version"/>
+                    </group>
+                    <group>
+                        <button string="Fetch Products" type="object" name="fetch_products" class="btn-primary"/>
+                        <button string="Fetch Customers" type="object" name="fetch_customers" class="btn-secondary"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_shopify_integration" model="ir.actions.act_window">
+        <field name="name">Shopify Integration</field>
+        <field name="res_model">shopify.integration</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_shopify_integration_root" name="Shopify Integration" sequence="10"/>
+    <menuitem id="menu_shopify_integration" parent="menu_shopify_integration_root"
+              action="action_shopify_integration" name="Configurations" sequence="1"/>
+</odoo>
