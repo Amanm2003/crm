@@ -1,0 +1,42 @@
+<odoo>
+
+    <record id="approval_config_tree" model="ir.ui.view">
+
+        <field name="name">sale.approval.config.tree</field>
+        <field name="model">sale.approval.config</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="min_amount"/>
+                <field name="max_amount"/>
+                <field name="risk_category"/>
+            </list>
+        </field>
+
+    </record>
+
+    <record id="approval_config_form" model="ir.ui.view">
+
+        <field name="name">sale.approval.config.form</field>
+        <field name="model">sale.approval.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="min_amount"/>
+                        <field name="max_amount"/>
+                        <field name="risk_category"/>
+                        <field name="credit_limit_breach"/>
+                        <field name="approver_ids"
+                               widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+
+    </record>
+
+</odoo>
