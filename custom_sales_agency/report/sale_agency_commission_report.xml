@@ -1,0 +1,15 @@
+<odoo>
+
+    <record id="action_report_sale_agency_commission"
+            model="ir.actions.report">
+        <field name="name">Agency Commission</field>
+        <field name="model">sale.agency.commission</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_sales_agency.report_sale_agency_commission</field>
+        <field name="report_file">custom_sales_agency.report_sale_agency_commission</field>
+        <field name="print_report_name">'Agency Commission - %s' % (object.seq_id)</field>
+        <field name="binding_model_id" ref="model_sale_agency_commission"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

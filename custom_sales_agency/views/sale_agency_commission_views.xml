@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_agency_commission_list" model="ir.ui.view">
+    <field name="name">sale.agency.commission.list</field>
+    <field name="model">sale.agency.commission</field>
+    <field name="arch" type="xml">
+        <list string="Commission Records"
+              decoration-danger="state == 'commission_reversed'"
+              decoration-success="state == 'commission_paid'"
+              decoration-warning="state == 'payment_received'">
+            <field name="seq_id"/>
+            <field name="commission_date"/>
+            <field name="agency_id"/>
+            <!-- <field name="partner_id"/> -->
+            <field name="so_id"/>
+             <!-- <field name="sale_order_ids" widget="many2many_tags"/> -->
+            <!-- <field name="invoice_id"/> -->
+            <field name="commission_amount"/>
+
+            <field name="state"
+                   widget="badge"
+                   decoration-success="state == 'commission_paid'"
+                   decoration-warning="state == 'payment_received'"
+                   decoration-danger="state == 'commission_reversed'"/>
+
+            <field name="currency_id" column_invisible="1"/>
+
+        </list>
+    </field>
+</record>
+
+    <record id="view_sale_agency_commission_form" model="ir.ui.view">
+    <field name="name">sale.agency.commission.form</field>
+    <field name="model">sale.agency.commission</field>
+    <field name="arch" type="xml">
+        <form string="Commission Record">
+
+            <header>
+
+                <button name="action_mark_customer_paid"
+                        type="object"
+                        string="Create Bill"
+                        class="btn-primary"
+                        invisible="state != 'draft'"/>
+
+                <button name="action_mark_commission_paid"
+                        type="object"
+                        string="Mark as Paid"
+                        class="btn-primary"
+                        invisible="1"/>
+
+                <button name="%(action_report_sale_agency_commission)d"
+                        string="Print"
+                        type="action"
+                        class="btn-secondary"
+                        icon="fa-print"/>
+
+                <field name="state"
+                       widget="statusbar"
+                       statusbar_visible="draft,payment_received,commission_paid"/>
+
+            </header>
+
+            <sheet>
+
+                <!-- Smart Buttons -->
+                <div class="oe_button_box" name="button_box">
+
+                    <button name="action_view_bill"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-file-text-o"
+                            invisible="not invoice_id">
+
+                        <field name="bill_count"
+                               widget="statinfo"
+                               string="Invoice"/>
+
+                    </button>
+                    <button name="action_view_agency_bill"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-file-text-o"
+                        invisible="agency_bill_count == 0">
+
+                    <field name="agency_bill_count"
+                        widget="statinfo"
+                        string="Agency Bill"/>
+
+                </button>
+
+                <button name="action_view_agency_note"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-file-text-o"
+                        invisible="agency_note_count == 0">
+
+                    <field name="agency_note_count"
+                        widget="statinfo"
+                        string="Debit Note"/>
+
+                </button>
+
+                </div>
+
+                <div class="oe_title">
+                    <label for="seq_id"/>
+                    <h1>
+                        <field name="seq_id" readonly="1"/>
+                    </h1>
+                </div>
+
+                <group>
+                    <group string="Commission Information">
+
+                        <field name="agency_id"
+                               readonly="state != 'draft'"/>
+
+                        <field name="commission_date"
+                               readonly="state != 'draft'"/>
+
+                        <field name="commission_amount"
+                               readonly="state != 'draft'"/>
+
+                        <field name="currency_id"
+                               readonly="state != 'draft'"
+                               groups="base.group_multi_currency"/>
+
+                    </group>
+
+                    <group string="Reference Information">
+
+                        <field name="so_id"
+                               readonly="state != 'draft'"/>
+
+                    </group>
+                </group>
+
+                <notebook>
+
+                    <page string="Notes">
+
+                        <field name="notes"
+                               readonly="state != 'draft'"
+                               placeholder="Internal notes..."/>
+
+                    </page>
+
+                </notebook>
+
+                <chatter/>
+
+            </sheet>
+
+        </form>
+    </field>
+</record>
+
+    <!-- <record id="view_sale_agency_commission_search" model="ir.ui.view">
+        <field name="name">sale.agency.commission.search</field>
+        <field name="model">sale.agency.commission</field>
+        <field name="arch" type="xml">
+            <search string="Search Commissions">
+                <field name="agency_id"/>
+                <field name="partner_id"/>
+                <field name="so_id"/>
+                <field name="invoice_id"/>
+                <filter string="Payment Received" name="filter_payment_received"
+                        domain="[('state','=','payment_received')]"/>
+                <filter string="Commission Paid" name="filter_commission_paid"
+                        domain="[('state','=','commission_paid')]"/>
+                <filter string="Reversals (Negative)" name="filter_negative"
+                        domain="[('commission_amount','&lt;',0)]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Agency" name="groupby_agency" context="{'group_by': 'agency_id'}"/>
+                    <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
+                    <filter string="Customer" name="groupby_partner" context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record> -->
+
+    <record id="action_sale_agency_commission" model="ir.actions.act_window">
+        <field name="name">Commission Records</field>
+        <field name="res_model">sale.agency.commission</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smart_help">
+                Commission records are created automatically when a Customer
+                Invoice linked to an Agency Order is posted.
+            </p>
+        </field>
+    </record>
+    <record id="action_commission_due" model="ir.actions.act_window">
+        <field name="name">Commission Due</field>
+        <field name="res_model">sale.agency.commission</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state','=','payment_received')]</field>
+    </record>
+    <record id="action_commission_paid" model="ir.actions.act_window">
+        <field name="name">Commission Paid</field>
+        <field name="res_model">sale.agency.commission</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state','=','commission_paid')]</field>
+    </record>
+
+</odoo>

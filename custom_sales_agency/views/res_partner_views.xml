@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_inherit_agency" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.agency</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- <xpath expr="//field[@name='partner_type']" position="after">
+                <field name="is_agentt" invisible='1'/>
+            </xpath> -->
+            <!-- <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_verify_agency_customer"
+                        type="object"
+                        string="Verify Customer"
+                        class="oe_stat_button"
+                        icon="fa-check"
+                        invisible="x_agency_verified or not x_agency_id"/>
+            </xpath> -->
+            <xpath expr="//sheet" position="before">
+            <header>
+                <button name="action_verify_agency_customer"
+                        type="object"
+                        string="Verify Customer"
+                        class="btn-primary"
+                        icon="fa-check"
+                        invisible="x_agency_verified or not x_agency_id"/>
+
+                <field name="x_agency_verified"
+                       widget="boolean_toggle"
+                       readonly="1"/>
+            </header>
+        </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Agency" name="agency_info" invisible="is_agentt">
+                    <group>
+                        <field name="x_agency_id" />
+                        <field name="x_agency_verified" readonly="1"/>
+
+                        <field name="x_agency_verified_date"
+                            readonly="1"
+                            invisible="not x_agency_verified"/>
+
+                        <field name="x_agency_verified_by"
+                            readonly="1"
+                            invisible="not x_agency_verified"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_agency_customers" model="ir.actions.act_window">
+        <field name="name">Agency Customers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('x_agency_id','!=',False)]</field>
+    </record>
+
+    <record id="res_config_settings_view_form_sale_agency" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.sale.agency</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//form" position="inside">
+
+                <app string="Sales Agency" name="sales_agency" logo="/custom_sales_agency/static/description/icon.png">
+
+                    <block title="Agency Commission">
+
+                        <setting string="Agency Commission Expense Account"
+                                 help="Expense account used while creating the vendor bill for agency commissions.">
+
+                            <field name="agency_commission_account_id"/>
+
+                        </setting>
+
+                        <h2>Overdue Payment Control</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="agency_overdue_tolerance_days" string="Overdue Tolerance (Days)"/>
+                                <div class="text-muted">
+                                    Sales orders for an agency's customers stay allowed until an
+                                    overdue invoice crosses this many days past its due date.
+                                    Set to 0 to block immediately on the due date.
+                                </div>
+                                <div class="content-group">
+                                    <field name="agency_overdue_tolerance_days"/> days
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </block>
+
+                </app>
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

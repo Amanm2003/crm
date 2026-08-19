@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_agency_user,sale.agency.user,model_sale_agency,group_sales_agency_user,1,0,0,0
+access_sale_agency_manager,sale.agency.manager,model_sale_agency,group_sales_agency_manager,1,1,1,1
+access_sale_agency_commission_user,sale.agency.commission.user,model_sale_agency_commission,group_sales_agency_user,1,0,0,0
+access_sale_agency_commission_manager,sale.agency.commission.manager,model_sale_agency_commission,group_sales_agency_manager,1,1,1,1

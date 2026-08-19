@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="seq_sale_agency_commission" model="ir.sequence">
+        <field name="name">Agency Commission</field>
+        <field name="code">sale.agency.commission</field>
+        <field name="prefix">AC/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="number_next">1</field>
+    </record>
+
+    
+
+</odoo>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_agency_form" model="ir.ui.view">
+    <field name="name">sale.agency.form</field>
+    <field name="model">sale.agency</field>
+    <field name="arch" type="xml">
+        <form string="Sales Agency">
+            <header>
+                <button name="action_create_bill"
+                        type="object"
+                        string="Create Bill"
+                        class="oe_highlight"
+                        invisible="not id or total_commission_due &lt;= 0"/>
+            </header>
+            <sheet>
+
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_customers"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-users">
+                        <field name="customer_count"
+                               widget="statinfo"
+                               string="Customers"/>
+                    </button>
+
+                    <button name="action_view_commissions"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-money">
+                        <field name="commission_count"
+                               widget="statinfo"
+                               string="Commissions"/>
+                    </button>
+
+                    <button name="action_view_bills"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-credit-card">
+                        <field name="bill_count"
+                               widget="statinfo"
+                               string="Bills"/>
+                    </button>
+                </div>
+
+                <widget name="web_ribbon"
+                        title="Archived"
+                        bg_color="text-bg-danger"
+                        invisible="active"/>
+
+                <div class="oe_title">
+                    <label for="name"/>
+                    <h1>
+                        <field name="name"
+                               placeholder="e.g. ABC Travel Agency"/>
+                    </h1>
+                </div>
+
+                <group>
+                    <group string="Agency Information">
+                        <field name="partner_id"/>
+                        <field name="agency_category"/>
+                        <field name="commission_pct"/>
+                        <field name="currency_id"
+                               groups="base.group_multi_currency"/>
+                        <field name="active" invisible="1"/>
+                    </group>
+
+                    <group string="Commission Summary">
+                        <field name="total_commission_due"
+                               readonly="1"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+
+                        <field name="total_commission_paid"
+                               readonly="1"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+<!-- 
+                        <field name="total_commission_negative"
+                               readonly="1"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/> -->
+                    </group>
+                </group>
+
+                <notebook>
+
+                    <page string="Customers">
+                        <field name="customer_ids" readonly="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                                <field name="city"/>
+                            </list>
+                        </field>
+                    </page>
+
+                    <page string="Commission Records">
+                        <field name="commission_ids" readonly="1">
+                            <list>
+                                <field name="commission_date"/>
+                                <field name="partner_id"/>
+                                <field name="so_id"/>
+                                <!-- <field name="invoice_id"/> -->
+                                <field name="commission_amount"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                                <field name="state"/>
+                                <field name="currency_id"
+                                       column_invisible="1"/>
+                            </list>
+                        </field>
+                    </page>
+
+                </notebook>
+
+            </sheet>
+
+            <chatter/>
+        </form>
+    </field>
+</record>
+
+    <record id="view_sale_agency_list" model="ir.ui.view">
+    <field name="name">sale.agency.list</field>
+    <field name="model">sale.agency</field>
+    <field name="arch" type="xml">
+        <list string="Sales Agencies" default_order="name">
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="commission_pct" string="Commission %" optional="show"/>
+
+            <field name="customer_count"
+                   string="Customers"
+                   sum="Total Customers"/>
+
+            <field name="total_commission_due"
+                   widget="monetary"
+                   options="{'currency_field': 'currency_id'}"
+                   sum="Total Due"/>
+
+            <field name="total_commission_paid"
+                   widget="monetary"
+                   options="{'currency_field': 'currency_id'}"
+                   sum="Total Paid"/>
+
+            <!-- <field name="active" widget="boolean_toggle" optional="show"/> -->
+        </list>
+    </field>
+</record>
+
+    <record id="view_sale_agency_search" model="ir.ui.view">
+        <field name="name">sale.agency.search</field>
+        <field name="model">sale.agency</field>
+        <field name="arch" type="xml">
+            <search string="Search Agencies">
+                <field name="name"/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sale_agency" model="ir.actions.act_window">
+        <field name="name">Agencies</field>
+        <field name="res_model">sale.agency</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smart_help">
+                Create your first Sales Agency
+            </p>
+        </field>
+    </record>
+
+</odoo>

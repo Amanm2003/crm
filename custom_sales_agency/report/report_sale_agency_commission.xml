@@ -1,0 +1,80 @@
+<odoo>
+
+    <template id="report_sale_agency_commission">
+
+        <t t-call="web.html_container">
+
+            <t t-foreach="docs" t-as="o">
+
+                <t t-call="web.external_layout">
+
+                    <div class="page">
+
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <h2 class="mb-1">Agency Commission</h2>
+                                <div class="text-muted">
+                                    <span t-field="o.seq_id"/>
+                                </div>
+                            </div>
+                            <div class="col-6 text-end">
+                                <div class="text-muted" style="font-size:12px;">STATUS</div>
+                                <div style="font-size:14px;font-weight:600;">
+                                    <span t-field="o.state"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="mt-0 mb-4"/>
+
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <th class="text-muted" style="width:35%;font-weight:500;padding:6px 4px;">Agency</th>
+                                    <td style="padding:6px 4px;">
+                                        <span t-field="o.agency_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted" style="font-weight:500;padding:6px 4px;">Customer</th>
+                                    <td style="padding:6px 4px;">
+                                        <span t-field="o.partner_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted" style="font-weight:500;padding:6px 4px;">Sales Order</th>
+                                    <td style="padding:6px 4px;">
+                                        <span t-field="o.so_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted" style="font-weight:500;padding:6px 4px;">Commission Date</th>
+                                    <td style="padding:6px 4px;">
+                                        <span t-field="o.commission_date"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-muted" style="font-weight:500;padding:6px 4px;">Commission Amount</th>
+                                    <td style="padding:6px 4px;font-weight:600;">
+                                        <span t-field="o.commission_amount"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4 style="font-size:13px;font-weight:600;" class="mt-4 mb-2">Notes</h4>
+                        <div style="border:1px solid #dee2e6;padding:10px;min-height:70px;">
+                            <span t-field="o.notes"/>
+                        </div>
+
+                    </div>
+
+                </t>
+
+            </t>
+
+        </t>
+
+    </template>
+
+</odoo>

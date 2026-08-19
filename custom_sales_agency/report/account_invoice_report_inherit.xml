@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        IMPORTANT: By design, the Agency (x_agency_id) field must NOT appear
+        on the printed Customer Invoice / Credit Note report. It is only
+        visible in the backend form view (see views/account_move_views.xml).
+
+        Since the standard 'account.report_invoice_document' QWeb template
+        does not reference x_agency_id anywhere, no inheritance/xpath is
+        required to hide it - it is simply never added to the printout.
+
+        This file is kept as an explicit, documented no-op so that future
+        developers do not accidentally add the Agency field to the print
+        template. If a change to the print template is ever required for
+        another reason, add the xpath here and be careful to keep
+        x_agency_id out of it.
+    -->
+</odoo>

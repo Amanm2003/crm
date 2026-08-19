@@ -1,0 +1,237 @@
+/* ================================
+   Odoo Dashboard Scroll Fix
+================================ */
+
+.o_action_manager,
+.o_action,
+.o_content,
+.o_web_client {
+    height: 100% !important;
+    overflow: auto !important;
+}
+
+
+/* ================================
+   Dashboard
+================================ */
+
+.o_agency_dashboard {
+    background: #f5f7fb;
+    padding: 24px;
+    min-height: 100vh;
+    height: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+
+    h1 {
+        font-weight: 700;
+        color: #27374d;
+        margin-bottom: 5px;
+    }
+
+    p {
+        color: #7d8794;
+        margin: 0;
+    }
+
+    .dashboard-header {
+        margin-bottom: 25px;
+    }
+
+
+    /* ==========================
+       KPI Cards
+    ========================== */
+
+    .dashboard-card {
+        border-radius: 18px;
+        color: #fff;
+        padding: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all .3s ease;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(0,0,0,.08);
+        min-height: 150px;
+
+        &:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 35px rgba(0,0,0,.15);
+        }
+
+        span {
+            font-size: 15px;
+            opacity: .95;
+        }
+
+        h2 {
+            margin-top: 15px;
+            font-size: 34px;
+            font-weight: 700;
+        }
+    }
+
+    .primary {
+        background: linear-gradient(135deg,#4f46e5,#6366f1);
+    }
+
+    .secondary {
+        background: linear-gradient(135deg,#0891b2,#06b6d4);
+    }
+
+    .warning {
+        background: linear-gradient(135deg,#f59e0b,#fbbf24);
+    }
+
+    .success {
+        background: linear-gradient(135deg,#16a34a,#22c55e);
+    }
+
+    .dashboard-icon {
+        width: 66px;
+        height: 66px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.18);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+    }
+
+
+    /* ==========================
+       Charts
+    ========================== */
+
+    .chart-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,.05);
+        margin-bottom: 25px;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #374151;
+    }
+
+    canvas {
+        width: 100% !important;
+        max-height: 360px;
+    }
+
+
+    /* ==========================
+       Table
+    ========================== */
+
+    .table-card {
+        background: #fff;
+        border-radius: 18px;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        overflow: visible;
+        box-shadow: 0 8px 20px rgba(0,0,0,.05);
+    }
+
+    .table-title {
+        padding: 18px 20px;
+        font-size: 18px;
+        font-weight: 700;
+        border-bottom: 1px solid #ececec;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        overflow-y: visible;
+        width: 100%;
+    }
+
+    table {
+        width: 100%;
+        margin: 0;
+
+        thead {
+            background: #f8fafc;
+        }
+
+        th {
+            font-weight: 600;
+            color: #555;
+            white-space: nowrap;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            transition: .2s;
+        }
+
+        tbody tr:hover {
+            background: #f5f9ff;
+        }
+    }
+
+
+    /* ==========================
+       Agency Cell
+    ========================== */
+
+    .agency-name {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .agency-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: #eef2ff;
+        color: #4f46e5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .badge {
+        padding: 7px 12px;
+        border-radius: 30px;
+        font-size: 13px;
+    }
+}
+
+
+/* ================================
+   Mobile
+================================ */
+
+@media (max-width: 991px) {
+
+    .o_agency_dashboard {
+        padding: 15px;
+    }
+
+    .dashboard-card {
+        min-height: 120px;
+
+        h2 {
+            font-size: 28px;
+        }
+    }
+
+    canvas {
+        max-height: 260px;
+    }
+}

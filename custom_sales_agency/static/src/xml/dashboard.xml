@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="custom_sales_agency.Dashboard">
+
+        <div class="o_agency_dashboard">
+
+            <!-- ===================================================== -->
+            <!-- Header -->
+            <!-- ===================================================== -->
+
+            <div class="dashboard-header d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+                    <h1>Agency Commission Dashboard</h1>
+                    <p>
+                        Monitor agency performance and commissions in real time.
+                    </p>
+                </div>
+
+                <button class="btn btn-primary btn-lg shadow"
+                        t-on-click="onRefresh">
+                    <i class="fa fa-refresh me-2"/>
+                    Refresh
+                </button>
+
+            </div>
+
+
+            <!-- ===================================================== -->
+            <!-- KPI CARDS -->
+            <!-- ===================================================== -->
+
+            <div class="row">
+
+                <!-- Total Agencies -->
+                <div class="col-xl-3 col-md-6 mb-4">
+
+                    <div class="dashboard-card primary"
+                         t-on-click="openAgencies"
+                         style="cursor:pointer;">
+
+                        <div>
+                            <span>Total Agencies</span>
+                            <h2 t-esc="state.total_agencies"/>
+                        </div>
+
+                        <div class="dashboard-icon">
+                            <i class="fa fa-building"/>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Total Customers -->
+                <div class="col-xl-3 col-md-6 mb-4">
+
+                    <div class="dashboard-card secondary"
+                         t-on-click="openCustomers"
+                         style="cursor:pointer;">
+
+                        <div>
+                            <span>Total Customers</span>
+                            <h2 t-esc="state.total_customers"/>
+                        </div>
+
+                        <div class="dashboard-icon">
+                            <i class="fa fa-users"/>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Commission Due -->
+                <div class="col-xl-3 col-md-6 mb-4">
+
+                    <div class="dashboard-card warning"
+                         t-on-click="openCommissionDue"
+                         style="cursor:pointer;">
+
+                        <div>
+                            <span>Commission Due</span>
+                            <h2 t-esc="state.total_commission_due_fmt"/>
+                        </div>
+
+                        <div class="dashboard-icon">
+                            <i class="fa fa-clock"/>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Commission Paid -->
+                <div class="col-xl-3 col-md-6 mb-4">
+
+                    <div class="dashboard-card success"
+                         t-on-click="openCommissionPaid"
+                         style="cursor:pointer;">
+
+                        <div>
+                            <span>Commission Paid</span>
+                            <h2 t-esc="state.total_commission_paid_fmt"/>
+                        </div>
+
+                        <div class="dashboard-icon">
+                            <i class="fa fa-check-circle"/>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ===================================================== -->
+            <!-- CHARTS -->
+            <!-- ===================================================== -->
+
+            <div class="row">
+
+                <div class="col-lg-5 mb-4">
+
+                    <div class="chart-card">
+
+                        <div class="card-title">
+                            Commission Distribution
+                        </div>
+
+                        <canvas t-ref="commissionSplitChart"/>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-7 mb-4">
+
+                    <div class="chart-card">
+
+                        <div class="card-title">
+                            Monthly Commission Trend
+                        </div>
+
+                        <canvas t-ref="monthlyTrendChart"/>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ===================================================== -->
+            <!-- TOP AGENCIES -->
+            <!-- ===================================================== -->
+
+            <div class="table-card">
+
+                <div class="table-title">
+                    Top Performing Agencies
+                </div>
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle mb-0">
+
+                        <thead>
+
+                            <tr>
+                                <th>Agency</th>
+                                <th class="text-end">Orders</th>
+                                <th class="text-end">Due</th>
+                                <th class="text-end">Paid</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <t t-foreach="state.top_agencies"
+                               t-as="agency"
+                               t-key="agency.id">
+                                <tr t-on-click="(ev) => this.openAgency(agency.id)">
+                                <!-- <tr t-on-click="() => openAgency(agency.id)"
+                                    style="cursor:pointer;"> -->
+
+                                    <td>
+
+                                        <div class="agency-name">
+
+                                            <div class="agency-avatar">
+                                                <i class="fa fa-building"/>
+                                            </div>
+
+                                            <span t-esc="agency.name"/>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        <span class="badge bg-primary"
+                                              t-esc="agency.order_count"/>
+
+                                    </td>
+
+                                    <td class="text-end">
+                                        <span t-esc="agency.commission_due_fmt"/>
+                                    </td>
+
+                                    <td class="text-end text-success fw-bold">
+                                        <span t-esc="agency.commission_paid_fmt"/>
+                                    </td>
+
+                                </tr>
+
+                            </t>
+
+                            <tr t-if="!state.top_agencies.length">
+
+                                <td colspan="4"
+                                    class="text-center py-4 text-muted">
+
+                                    No agencies found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </t>
+
+</templates>
